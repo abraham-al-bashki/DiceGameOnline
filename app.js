@@ -7,11 +7,6 @@ const io = new Server(server);
 const serverData = [];
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  console.log('/' + __dirname + 'public/index.html');
-  res.sendFile(__dirname + 'public/index.html');
-});
-
 io.on('connection', (socket) => {
   io.emit('chat message', `${socket.id} is connected`);
   console.log(`${socket.id} is connected`);
@@ -33,7 +28,8 @@ io.on('connection', (socket) => {
   });
   socket.on('cast dice', (data) => {
     const newScore = Math.floor(Math.random() * 6 + 1);
-    let obj = serverData.find((obj) => obj.username === data.username);
+    //username is not unique, that's why it is not used in filter
+    let obj = serverData.find((obj) => obj.id === socket.id);
     if (obj) {
       obj.totalScore = obj.totalScore + newScore;
     }
