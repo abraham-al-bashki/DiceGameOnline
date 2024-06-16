@@ -29,13 +29,9 @@ io.on('connection', (socket) => {
   });
   socket.on('chat message', (msg) => {
     const userObject = serverData.filter((arg) => arg.id === socket.id)[0];
-    console.log('userObject');
-    console.log(userObject);
-    console.log('end');
     io.emit('chat message', `${userObject.username}: ${msg}`);
   });
   socket.on('cast dice', (data) => {
-    console.log('work?');
     const newScore = Math.floor(Math.random() * 6 + 1);
     let obj = serverData.find((obj) => obj.username === data.username);
     if (obj) {
