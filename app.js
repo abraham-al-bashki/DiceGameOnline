@@ -27,8 +27,9 @@ io.on('connection', (socket) => {
     io.emit('chat message', `${userObject.username}: ${msg}`);
   });
   socket.on('cast dice', (data) => {
+    //the 'real' casting dice is done in the server so the users doesn't cheat by modifying the client code
     const newScore = Math.floor(Math.random() * 6 + 1);
-    //username is not unique, that's why it is not used in filter
+    //username is not unique, that's why data.username is not used in filtering
     let obj = serverData.find((obj) => obj.id === socket.id);
     if (obj) {
       obj.totalScore = obj.totalScore + newScore;
